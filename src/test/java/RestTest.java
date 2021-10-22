@@ -22,10 +22,10 @@ public class RestTest {
 
         JsonPath jsonPath = response.jsonPath();
 
-        String circuitIdIndex0 = jsonPath.get("MRData.CircuitTable.Circuits[0].circuitId");
+        String circuitIdIndex0 = jsonPath.get("MRData.CircuitTable.Circuits[1].circuitId");
         String circuitIdIndex5 = jsonPath.get("MRData.CircuitTable.Circuits[5].circuitId");
         //get country value to validate country in "validateCountry()" test
-        String countryIndex0 = jsonPath.get("MRData.CircuitTable.Circuits[0].Location.country");
+        String countryIndex0 = jsonPath.get("MRData.CircuitTable.Circuits[1].Location.country");
         String countryIndex5 = jsonPath.get("MRData.CircuitTable.Circuits[5].Location.country");
 
         return new Object[][]{
@@ -44,9 +44,6 @@ public class RestTest {
                 .then()
                 .log().body()
                 .statusCode(200)
-                .body("MRData.CircuitTable.Circuit.Location.Country",equalTo(country))
-                .extract()
-                .response();
-
+                .body("MRData.CircuitTable.Circuit.Location.Country",equalTo(country));
     }
 }
