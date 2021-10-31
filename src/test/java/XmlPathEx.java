@@ -6,8 +6,6 @@ import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static io.restassured.path.xml.XmlPath.with;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -67,10 +65,7 @@ public class XmlPathEx {
         // Using XMLPath validate 'sName' node result with value of sCode equals to 'AN'
         XmlPath xmlPath = response.xmlPath();
         String nameWithCodeAN = xmlPath.getString("ArrayOftContinent.tContinent.find {it.sCode == 'AN'}.sName");
-        System.out.println(nameWithCodeAN);
-
-
-
+        Assert.assertEquals(nameWithCodeAN,"Antarctica");
     }
 
 
