@@ -55,6 +55,11 @@
             <version>7.4.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.servicemix.bundles</groupId>
+            <artifactId>org.apache.servicemix.bundles.jaxp-ri</artifactId>
+            <version>1.4.5_1</version>
+        </dependency>
     </dependencies>
 
 </project>
