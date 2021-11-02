@@ -1,6 +1,6 @@
-package pojos;
+package Models.responses;
 
-public class RegisterSuccessPojo {
+public class RegisterSuccessResponse {
     private int id;
 
     public int getId() {

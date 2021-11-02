@@ -1,4 +1,4 @@
-package pojos;
+package Models.requests;
 
 import lombok.Data;
 

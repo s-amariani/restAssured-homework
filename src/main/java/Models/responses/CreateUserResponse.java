@@ -1,9 +1,9 @@
-package pojos;
+package Models.responses;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
-import utils.DateDeserializer;
+import Utils.DateDeserializer;
 
 import java.time.LocalDateTime;
 @Data
