@@ -1,3 +1,6 @@
+import Steps.CreateUserStep;
+import Steps.RegisterFailStep;
+import Steps.RegisterSuccessStep;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -5,10 +8,10 @@ import io.restassured.specification.RequestSpecification;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pojos.CreateUserRequest;
-import pojos.CreateUserResponse;
-import pojos.RegisterFailPojo;
-import pojos.RegisterSuccessPojo;
+import Models.requests.CreateUserRequest;
+import Models.responses.CreateUserResponse;
+import Models.responses.RegisterFailResponse;
+import Models.responses.RegisterSuccessResponse;
 
 import static io.restassured.RestAssured.*;
 
@@ -20,70 +23,15 @@ public class ObjectMapping {
                     .setContentType(ContentType.JSON)
                     .build();
 
-
     @Test
-    public void registerSuccess() {
-        JSONObject requestParams = new JSONObject();
-        requestParams.put("email", "eve.holt@reqres.in");
-        requestParams.put("password", "pistol");
+    public void apiTest() {
+        RegisterSuccessStep registerSuccessStep = new RegisterSuccessStep();
+        registerSuccessStep.registerSuccess(REQ_SPEC);
 
-        basePath = "/register";
+        RegisterFailStep registerFailStep = new RegisterFailStep();
+        registerFailStep.registerFail(REQ_SPEC);
 
-        Response response = given()
-                .spec(REQ_SPEC)
-                .body(requestParams.toJSONString())
-                .post()
-                .then()
-                .extract().response();
-
-        //Deserialize JSON based on status code
-        if (response.statusCode() == 200) {
-            RegisterSuccessPojo registerSuccessPojo = response.as(RegisterSuccessPojo.class);
-            //Validate id and token values
-            Assert.assertEquals(registerSuccessPojo.getId(),4);
-            Assert.assertEquals(registerSuccessPojo.getToken(),"QpwL5tke4Pnpja7X4");
-        }
-    }
-
-    @Test
-    public void registerFail() {
-        JSONObject requestParams = new JSONObject();
-        requestParams.put("email", "sydney@fife");
-
-
-        basePath = "/register";
-        Response response = given()
-                .spec(REQ_SPEC)
-                .body(requestParams.toJSONString())
-                .post()
-                .then()
-                .extract().response();
-
-        //Deserialize JSON based on status code
-        if (response.statusCode() == 400){
-            RegisterFailPojo registerFailPojo = response.as(RegisterFailPojo.class);
-            //Validate error
-            Assert.assertEquals(registerFailPojo.getError(),"Missing password");
-        }
-    }
-
-    @Test
-    public void createUser(){
-            baseURI = "https://reqres.in/api/users";
-        CreateUserRequest request = new CreateUserRequest();
-        request.setName("morpheus");
-        request.setJob("leader");
-
-        CreateUserResponse createUserResponse = given()
-                .contentType(ContentType.JSON)
-                .body(request)
-                .when().post()
-                .then()
-                .statusCode(201)
-                .extract().response().as(CreateUserResponse.class);
-
-
-        System.out.println(createUserResponse.getName() + "\n" + createUserResponse.getJob() + "\n" + createUserResponse.getId() + "\n" + createUserResponse.getCreatedAt());
-
+        CreateUserStep createUserStep = new CreateUserStep();
+        createUserStep.createUser();
     }
 }
